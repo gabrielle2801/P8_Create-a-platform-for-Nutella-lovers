@@ -12,12 +12,12 @@ class Command(BaseCommand):
             products = self.get_products(category_dict)
             for product in products:
                 p = self.create_product(product)
-                category_names = product.get("categories").split(",")
+                category_names = product.get("categories").lower().split(",")
                 for category in category_names:
                     c, created = Category.objects.get_or_create(name=category)
                     p.categories.add(c)
                 if product.get("stores"):
-                    stores = product.get("stores").split(",")
+                    stores = product.get("stores").lower().split(",")
                     for store in stores:
                         s, created = Store.objects.get_or_create(name=store)
                         p.stores.add(s)
@@ -59,7 +59,6 @@ class Command(BaseCommand):
         response_product = requests.get(
             "https://fr.openfoodfacts.org/cgi/search.pl?", query)
         result_product = response_product.json()
-
         return result_product["products"]
 
     def create_product(self, product):
@@ -70,9 +69,10 @@ class Command(BaseCommand):
         description = product.get("ingredients_text")
         barcode = product.get("code")
         picture = product.get("image_front_url")
-        brand = product.get("brands")
-        b, created = Brand.objects.get_or_create(
-            name=brand)
+        brands = product.get("brands").lower().split(",")
+        for brand in brands:
+            b, created = Brand.objects.get_or_create(
+                name=brand)
 
         p, created = Product.objects.get_or_create(
             name=name, nutriscore=nutriscore, nova=nova, url=url, barcode=barcode,

@@ -8,7 +8,7 @@ from product.management.commands.import_off import Command
 class ProductTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Brand.objects.create(name='Bjorg')
+        Brand.objects.create(name='bjorg')
         Product.objects.create(name='Muesli Raisin, Figue, Abricot',
                                nutriscore='a', nova=1,
                                url='https://fr.openfoodfacts.org/produit/'
@@ -27,7 +27,7 @@ class ProductTestCase(TestCase):
                                'products/322/982/012/9488/front_fr.166.400.jpg',
                                brand_id=1
                                )
-        Category.objects.create(name='Aliments et boissons à base de végétaux')
+        Category.objects.create(name='aliments et boissons à base de végétaux')
 
     def test_name_label(self):
         product = Product.objects.get(id=1)
@@ -44,13 +44,16 @@ class ProductTestCase(TestCase):
         expected_object_name = brand.name
         self.assertEquals(expected_object_name, str(brand))
 
+    def test_lower_item(self):
+        brand = Brand.objects.get()
+
 
 class GetCategory(TestCase):
 
     @mock.patch('requests.get')
     def test_get_categories(self, mock_get):
         mock_response = mock.Mock()
-        expected_json = {
+        mock_api = {
             'tags': [{
                 'id': 'en:plant-based-foods-and-beverages',
                 'known': 1,
@@ -61,7 +64,7 @@ class GetCategory(TestCase):
             ]
         }
 
-        mock_response.json.return_value = expected_json
+        mock_response.json.return_value = mock_api
         mock_response.status_code = 200
         mock_get.return_value = mock_response
 
@@ -94,17 +97,4 @@ class GetProduct(TestCase):
         command = Command()
         result = command.get_products(
             "Aliments et boissons à base de végétaux")
-        self.assertEquals(result, {
-            'count': 107676,
-            'page': 1,
-            'page_count': 10,
-            'page_size': 10,
-            'products': [{'_id': '3229820129488',
-                          'brands': 'Bjorg',
-                          'categories': "Aliments et boissons à base de végétaux, "
-                          "Aliments d'origine végétale, Céréales et pommes de terre,"
-                          " Petit-déjeuners, Céréales et dérivés, Céréales pour petit-déjeuner,"
-                          " Céréales aux fruits, Mueslis, Mueslis aux fruits",
-                          'code': 3229820129488,
-                          'url': 'https://fr.openfoodfacts…isin-figue-abricot-bjorg'
-                          }]})
+        self.assertEquals(result, expected_json["products"])
