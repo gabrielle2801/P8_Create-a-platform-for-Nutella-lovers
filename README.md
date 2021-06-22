@@ -17,8 +17,8 @@ _______________________________
 Il faut tout d'abord créer un environnement virtuel
 ``` shell
 pip install virtualenv
-virtualenv -p python3 env
-source env/bin/activate
+virtualenv -p python3 myvenv
+source myvenv/bin/activate
 ```
 Puis installer les paquets Python-Django
 ``` shell
@@ -51,9 +51,9 @@ ________________________________
     * impossibilité de pour pouvoir changer son mot de passe pour le moment
 _____________________________
 
-Méthode Agile -> Users Stories / Tableau de tâches et sous tâches sur Trello :
+* Méthode Agile -> Users Stories / Tableau de tâches et sous tâches sur Trello :
 https://trello.com/b/iMvWuBbe/p8-creez-une-plateforme-pour-amateurs-de-nutella
-Heroku
+* Heroku
 
 
 
