@@ -18,10 +18,10 @@ def sign_up(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/home')
+            return redirect('users_account/home.html')
     else:
         form = UserCreationForm()
-    return render(request, 'users_account/sign_up.html', {'from': form})
+    return render(request, 'users_account/registration/sign_up.html', {'from': form})
 
 
 def login_request(request):
