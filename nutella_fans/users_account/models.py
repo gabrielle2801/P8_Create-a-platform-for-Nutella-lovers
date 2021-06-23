@@ -7,9 +7,6 @@ from django.dispatch import receiver
 
 class User(AbstractUser):
 
-    email = models.EmailField(
-        max_length=258, verbose_name='email address', unique=True)
-    password = models.CharField(max_length=128, verbose_name='password')
     substitutes = models.ManyToManyField(Substitute)
 
     def __str__(self):
