@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib.auth.forms import AuthenticationForm
 
-from users_account.forms import UserCreationForm
+from users_account.forms import UserCreationForm, LoginForm
 
 
 def base(request):
@@ -33,7 +33,8 @@ def sign_up(request):
 def login_request(request):
     print("test")
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        # form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -46,7 +47,8 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
                 return render(request, 'users_account/registration/login.html')
     else:
-        form = AuthenticationForm()
+        # form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'users_account/registration/login.html', {'form': form})
 
 
