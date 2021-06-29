@@ -1,8 +1,9 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import authenticate
+# from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+# from users_account.models import User
 from django.test import TestCase
-from django.test import Client
+# from django.test import Client
 from django.urls import reverse
 
 
