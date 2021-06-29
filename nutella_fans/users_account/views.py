@@ -1,22 +1,28 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
-# from django.contrib.auth.forms import AuthenticationForm
-
+from django.views import View
 from users_account.forms import UserCreationForm, LoginForm
 
 
 def base(request):
-    return render(request, 'users_account/base.html')
+    return render(request, 'base.html')
 
 
 def home(request):
     return render(request, 'users_account/home.html')
 
 
-def sign_up(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+class SignupView(View):
+    form_class = UserCreationForm
+    template_name = "users_account/registration/sign_up.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             username = request.POST['username']
@@ -24,32 +30,32 @@ def sign_up(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'users_account/home.html')
-    else:
-        form = UserCreationForm()
-    return render(request, 'users_account/registration/sign_up.html', {'form': form})
+                return render(request, 'base.html')
+        else:
+            form = UserCreationForm()
+        return render(request, self.template_name, {'form': form})
 
 
-def login_request(request):
-    print("test")
-    if request.method == 'POST':
-        # form = AuthenticationForm(request, data=request.POST)
-        form = LoginForm(request.POST)
+class LoginView(View):
+    form_class = LoginForm
+    template_name = "users_account/registration/login.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+            username = request.POST['username']
+            password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return render(request, 'users_account/home.html')
-            else:
-                messages.error(request, "Invalid username or password.")
-                return render(request, 'users_account/registration/login.html')
-    else:
-        # form = AuthenticationForm()
-        form = LoginForm()
-    return render(request, 'users_account/registration/login.html', {'form': form})
+                return render(request, 'base.html')
+        else:
+            form = LoginForm()
+        return render(request, self.template_name, {'form': form})
 
 
 def logout_request(request):

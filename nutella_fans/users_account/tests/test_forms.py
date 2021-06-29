@@ -1,0 +1,26 @@
+from django.test import TestCase
+from users_account.forms import UserCreationForm, LoginForm
+from users_account.models import User
+
+
+class UserFormTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(
+            username='gabrielle', email='gabrielle@email.com', password='12test12')
+
+    def test_userform_valid(self):
+        form = UserCreationForm(data={
+            'username': 'gabrielle',
+            'email': 'gabrielle@email.com',
+            'password': '12test12'
+        })
+        self.assertTrue(form.is_valid())
+
+
+class LoginTest(TestCase):
+    def test_login(self):
+        form_data = {'username': 'username',
+                     'password': 'password'
+                     }
+        form = LoginForm(data=form_data)
+        self.assertTrue(form.is_valid())
