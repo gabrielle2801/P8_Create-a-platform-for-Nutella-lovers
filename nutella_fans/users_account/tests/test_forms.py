@@ -6,25 +6,27 @@ from users_account.models import User
 class UserFormTest(TestCase):
     def setUp(self):
         self.user = User.objects.create(
-            username='gabrielle', email='gabrielle@email.com', password1='12test12', password2='12test12')
+            username='gabrielle', email='gabrielle@email.com', password='12test12')
 
     def test_userform_valid(self):
         form = UserCreationForm(data={
-            'username': 'gabrielle',
-            'email': 'gabrielle@email.com',
+            'username': 'annie',
+            'email': 'annie@email.com',
             'password1': '12test12',
             'password2': '12test12'
         })
+
         self.assertTrue(form.is_valid())
 
-    def test_invalid_password(self):
-        form = UserCreationForm(data={
-            'username': 'gabrielle',
-            'email': 'gabrielle@email.com',
-            'password1': '12test12',
-            'password2': '12test'
-        })
-        self.assertFalse(form.is_valid())
+
+def test_invalid_password(self):
+    form = UserCreationForm(data={
+        'username': 'gabrielle',
+        'email': 'gabrielle@email.com',
+        'password1': '12test12',
+        'password2': '12test'
+    })
+    self.assertFalse(form.is_valid())
 
 
 class LoginTest(TestCase):

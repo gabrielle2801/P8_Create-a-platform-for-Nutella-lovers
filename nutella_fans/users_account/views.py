@@ -22,7 +22,9 @@ class SignupView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        import ipdb
+        ipdb.set_trace()
+        form = self.form_class(data=request.POST)
         if form.is_valid():
             form.save()
             username = request.POST['username']
@@ -30,9 +32,7 @@ class SignupView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'base.html')
-        else:
-            form = UserCreationForm()
+                return redirect('base')
         return render(request, self.template_name, {'form': form})
 
 
@@ -45,16 +45,14 @@ class LoginView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(data=request.POST)
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'base.html')
-        else:
-            form = LoginForm()
+                return redirect('base')
         return render(request, self.template_name, {'form': form})
 
 
