@@ -1,9 +1,5 @@
-# from django.contrib.auth import authenticate
-# from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-# from users_account.models import User
 from django.test import TestCase
-# from django.test import Client
 from django.urls import reverse
 
 
@@ -15,8 +11,8 @@ class BaseTest(TestCase):
             username='test', password='12test12', email='test@email.com')
         self.user = {
             'username': 'username',
-            'password': 'password',
-            'password2': 'password',
+            'password1': 'password@1234',
+            'password2': 'password@1234',
             'email': 'testemail@gmail.com'
         }
         self.user_unmatching_password = {
@@ -39,22 +35,22 @@ class SignUpTest(BaseTest):
         response = self.client.get(self.signup_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(
-            response, 'users_account/registration/sign_up.html')
+            response, 'registration/sign_up.html')
 
-    def test_can_singup(self):
+    def test_can_signup(self):
         response = self.client.post(
-            self.signup_url, self.user, format='text/html')
-        self.assertEquals(response.status_code, 200)
+            self.signup_url, self.user)
+        self.assertEquals(response.status_code, 302)
 
     def test_unmatching_password(self):
         response = self.client.post(
-            self.signup_url, self.user, format='text/html')
-        self.assertEquals(response.status_code, 400)
+            self.signup_url, self.user_unmatching_password)
+        self.assertEquals(response.status_code, 200)
 
     def test_invalid_email(self):
         response = self.client.post(
-            self.signup_url, self.user_email_invalid, format='text/html')
-        self.assertEquals(response.status_code, 400)
+            self.signup_url, self.user_email_invalid)
+        self.assertEquals(response.status_code, 200)
 
 
 class LoginTest(BaseTest):
@@ -62,4 +58,4 @@ class LoginTest(BaseTest):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(
-            response, 'users_account/registration/login.html')
+            response, 'registration/login.html')
