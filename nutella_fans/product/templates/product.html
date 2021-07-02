@@ -1,12 +1,23 @@
-{% extends 'base.html' %}
-{% block content %}
-    <ul>
-        {% if products %}
-            {% for product in products %}
-                <li>{{ product.name}}</li>
-            {% endfor %}
-        {% else %}
-        <span class="text_danger">Il n'y a pas de produit ici</span>
-        {% endif %}
-    </ul>
+{% extends 'home.html' %}
+{% block header %}
+<header class="masthead login">
+    <section  id="about">
+      <div class="container px-4 px-lg-5 h-100">
+          <div class="row  align-items-center justify-content-center text-center">
+              <div class="col-lg-8 text-center">
+                <ul>
+                    <p>You searched for :<strong>{{ query }}</strong></p>
+                    {% if products %}
+                        {% for product in products %}
+                            <li>{{ product.name}}</li>
+                        {% endfor %}
+                    {% else %}
+                    <span class="text_danger">Il n'y a pas de produit ici</span>
+                    {% endif %}
+                </ul>
+             </div>
+          </div>
+      </div>
+    </section>
+  </header>
 {% endblock%}
