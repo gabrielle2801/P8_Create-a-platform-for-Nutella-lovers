@@ -160,6 +160,8 @@ Thumbs.db
 # profiling data
 .prof
 node_modules
+.DS_Store
+nutella_fans/static
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
