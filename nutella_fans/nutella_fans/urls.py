@@ -25,6 +25,4 @@ urlpatterns = [
     path('', include('users_account.urls')),
     path('', TemplateView.as_view(template_name='base.html'), name='base'),
     path('account/', include('django.contrib.auth.urls')),
-    path('', include('product.urls'))
-
 ]
