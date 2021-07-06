@@ -29,11 +29,12 @@ class Product(models.Model):
     url = models.URLField(max_length=200)
     barcode = models.CharField(max_length=200)
     description = models.TextField()
-    picture = models.URLField(null=True)
+    picture = models.ImageField(null=True)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
     stores = models.ManyToManyField(Store)
 
     def __str__(self):
-        return self.nutriscore, self.nova, self.name
+        return self.nutriscore, self.nova, self.name, self.url,
+        self.description, self.stores
