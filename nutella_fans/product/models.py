@@ -29,7 +29,7 @@ class Product(models.Model):
     url = models.URLField(max_length=200)
     barcode = models.CharField(max_length=200)
     description = models.TextField()
-    picture = models.ImageField(null=True)
+    picture = models.URLField(null=True)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)

@@ -11,7 +11,7 @@
                         {% for product in products %}
                             <li>{{product.name}}</li>
                             <li>{{product.description}}</li>
-                            <img src=" {{product.picture.url}} ">
+                            <img src="{{product.picture}}">
                         {% endfor %}
                     {% else %}
                     <span class="text_danger">Il n'y a pas de produit ici</span>
