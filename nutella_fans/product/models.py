@@ -34,7 +34,3 @@ class Product(models.Model):
         Brand, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
     stores = models.ManyToManyField(Store)
-
-    def __str__(self):
-        return self.nutriscore, self.nova, self.name, self.url,
-        self.description, self.stores

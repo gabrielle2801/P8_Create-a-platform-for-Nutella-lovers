@@ -45,7 +45,7 @@ class ProductTestCase(TestCase):
         self.assertEquals(expected_object_name, str(brand))
 
     def test_lower_item(self):
-        brand = Brand.objects.get()
+        self.assertEquals('BJORG'.lower(), 'bjorg')
 
 
 class GetCategory(TestCase):

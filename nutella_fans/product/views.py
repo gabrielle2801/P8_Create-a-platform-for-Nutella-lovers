@@ -1,15 +1,18 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
+from django.views.generic import ListView
 
 from product.models import Product
 
 
-def product(request):
-    if 'search_product' in request.GET and request.GET['search_product']:
-        search_product = request.GET['search_product']
-        products = Product.objects.filter(name__startswith=search_product)
-        return render(request, 'product.html',
-                      {'products': products, 'query': search_product})
-    else:
-        return HttpResponse('Please ...')
+class ProductListView(ListView):
+    template_name = 'product_list.html'
+    model = Product
+
+    def get_queryset(self):
+        search = self.request.GET.get('search_product', '').strip()
+        qs = super().get_queryset()
+        if search:
+
+            return qs.filter(name__icontains=search).order_by(
+                'nutriscore').distinct()
+        else:
+            return qs
