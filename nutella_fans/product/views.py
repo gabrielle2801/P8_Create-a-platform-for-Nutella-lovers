@@ -12,7 +12,6 @@ class ProductListView(ListView):
         qs = super().get_queryset()
         if search:
 
-            return qs.filter(name__icontains=search).order_by(
-                'nutriscore').distinct()
+            return qs.filter(name__icontains=search)
         else:
             return qs

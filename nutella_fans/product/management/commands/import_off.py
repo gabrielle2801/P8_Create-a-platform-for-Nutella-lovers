@@ -54,7 +54,7 @@ class Command(BaseCommand):
             "tag_contains_0": "contains",
             "tag_0": category,
             "sort_by": "unique_scans_n",
-            "page_size": 10,
+            "page_size": 50,
             "json": 1}
         response_product = requests.get(
             "https://fr.openfoodfacts.org/cgi/search.pl?", query)
