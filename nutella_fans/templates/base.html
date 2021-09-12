@@ -32,8 +32,8 @@
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                            <form action="/product/" method="get">
-                                <input type="text" name="product" id="navbar" class="form-control navbar" placeholder="Rechercher">
+                            <form  method="get" action="{% url 'product_list' %}">
+                                <input type="text" name="search_product" id="navbar" class="form-control navbar" placeholder="Rechercher">
                             </form>
                             {% if user.is_authenticated %}
                             <div>
@@ -60,13 +60,11 @@
                         </div>
                         <div class="col-lg-8 align-self-baseline">
                             <p class="text-white-75 mb-5"> Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</p>
-                            <form action="/product_detail/" method="get">
-                                  <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Rechercher un produit" name="search" >
-                                        <div class="input-group-append">
-                                        <button class="btn btn-primary btn" type="button" id="texte-bouton">Rechercher</button>
-                                        </div>
-                                    </div>
+                            <form  method="GET" action="{% url 'product_list' %}">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Rechercher un produit" name="search_product" value='{{request.GET.search_product}}'>
+                                    <input type="submit"  class="btn btn-primary" value="Rechercher">
+                                </div>
                             </form>
                         </div>
                     </div>
